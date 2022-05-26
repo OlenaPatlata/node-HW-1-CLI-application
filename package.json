@@ -1,0 +1,28 @@
+{
+  "name": "node-HW-1-CLI-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OlenaPatlata/node-HW-1-CLI-application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/OlenaPatlata/node-HW-1-CLI-application/issues"
+  },
+  "homepage": "https://github.com/OlenaPatlata/node-HW-1-CLI-application#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "commander": "^9.2.0"
+  }
+}
