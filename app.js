@@ -1,4 +1,5 @@
-const fs = require("fs/promises");
+const { Command } = require("commander");
+const program = new Command();
 const db = require("./db");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
@@ -28,17 +29,15 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
     console.log(1111111);
   }
 };
-const filePath = `${__dirname}\\db\\contacts.json`;
 
-// invokeAction({ filePath, action: "list" });
-// invokeAction({ action: "get", id: "7" });
-// invokeAction({
-//   action: "add",
-//   name: "Elen",
-//   email: "elen@dictum.couk",
-//   phone: "(715) 00000000",
-// });
-invokeAction({
-  action: "remove",
-  id: "B9uAGCj7BAkNBP8TchTw_",
-});
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone")
+  .helpOption("-h, --help", "display help for command");
+
+program.parse(process.argv);
+const options = program.opts();
+invokeAction(options);
