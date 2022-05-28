@@ -1,43 +1,44 @@
-console.log("Hello");
-const fs = require("fs").promises;
-const path = require("path").promises;
-const colors = require("colors");
-const readline = require("readline");
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
+const fs = require("fs/promises");
+const db = require("./db");
+
+const invokeAction = async ({ action, id, name, email, phone }) => {
+  try {
+    switch (action) {
+      case "list":
+        const allContacts = await db.getAll();
+        console.log(allContacts);
+        break;
+      case "get":
+        const data = await db.getOneById(id);
+        console.log(data);
+        break;
+      case "add":
+        const dataNew = await db.addContact(name, email, phone);
+        console.log(dataNew);
+        break;
+      case "remove":
+        const removedContact = await db.removeContact(id);
+        console.log(removedContact);
+        break;
+      default:
+        console.warn("\x1B[31m Unknown action type!");
+    }
+  } catch (error) {
+    console.error(error);
+    console.log(1111111);
+  }
+};
+const filePath = `${__dirname}\\db\\contacts.json`;
+
+// invokeAction({ filePath, action: "list" });
+// invokeAction({ action: "get", id: "7" });
+// invokeAction({
+//   action: "add",
+//   name: "Elen",
+//   email: "elen@dictum.couk",
+//   phone: "(715) 00000000",
+// });
+invokeAction({
+  action: "remove",
+  id: "B9uAGCj7BAkNBP8TchTw_",
 });
-const { program } = require("commander");
-require("colors");
-program.parse(process.argv);
-console.log(process.argv.slice(2));
-program.option("-d, --debug");
-
-const moduleContacts = require("./contacts");
-// moduleContacts.getAll();
-let count = 0;
-
-rl.on("line", (cmd) => {
-  console.log(`You just typed: ${cmd}`);
-});
-
-rl.question("Как вас зовут?", (answer) => {
-  console.log(`Hi ${answer}`.yellow);
-});
-
-// fs.readFile("./db/contacts.json", "utf-8")
-//   .then((data) => {
-//     return console.log(data);
-//   })
-//   .catch((err) => console.error(err));
-
-// fs.readdir(__dirname)
-//   .then((files) => {
-//     return Promise.all(
-//       files.map(async (filename) => {
-//         const stats = await fs.stat(filename);
-//         return { Name: filename, Size: stats.size, Data: stats.mtime };
-//       })
-//     );
-//   })
-//   .then((result) => console.table(result));
